@@ -1,4 +1,5 @@
 package dat250.appassignB.model;
+
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -17,17 +18,12 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String username; //added
+
+    private String username;
     private String password;
 
+    // One-to-Many relationship with Poll
     @OneToMany(mappedBy = "user")
-    private Set<Poll> polls;
-
-    public Set<Poll> getUserPolls(){
-        return polls;
-    }
-
-
-
-
+    private Set<Poll> polls = new HashSet<>();
 }
+

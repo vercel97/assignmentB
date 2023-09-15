@@ -18,15 +18,17 @@ public class Poll {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     private Boolean isPrivate;
     private Integer timeLimit;
-    //TODO -poll data what type is that, also should timeLimit be a some sort of integer?
-    private IoTdevice pairedTo;
 
-    //a user can create many polls, only one user can own a poll
+    // One-to-One relationship with IoTdevice
+    @OneToOne(mappedBy = "poll")
+    private IoTdevice iotDevice;
+
+    // Many-to-One relationship with User
     @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
-
-
-
 }
+
