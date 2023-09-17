@@ -11,10 +11,13 @@ import lombok.Setter;
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class WebClient {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    //TODO implement realtions
+    @EqualsAndHashCode.Include
+    @Setter
+    @Getter
+    private Integer redVotes;
+    @Setter
+    @Getter
+    private Integer greenVotes;
 }

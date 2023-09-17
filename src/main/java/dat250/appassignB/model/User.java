@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -17,13 +18,20 @@ import java.util.Set;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
+    @EqualsAndHashCode.Include
     private String username;
+    @Setter
+    @Getter
+    private String email;
+    @Setter
+    @Getter
     private String password;
+    @Setter
+    @Getter
+    @OneToMany
+    private List<Poll> polls;
 
-    // One-to-Many relationship with Poll
-    @OneToMany(mappedBy = "user")
-    private Set<Poll> polls = new HashSet<>();
+    // Constructors
+
 }
 

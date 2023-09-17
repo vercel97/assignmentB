@@ -17,18 +17,18 @@ import java.util.Set;
 public class Poll {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @EqualsAndHashCode.Include
+    private int id;
 
-    private Boolean isPrivate;
-    private Integer timeLimit;
+    private boolean isPrivate;
 
-    // One-to-One relationship with IoTdevice
-    @OneToOne(mappedBy = "poll")
-    private IoTdevice iotDevice;
+    private int duration;
 
-    // Many-to-One relationship with User
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    //@OneToOne
+    //private PollData pollData;
+
+    @OneToOne(mappedBy = "pairedPoll")
+    //@JoinColumn(name = "iot_device_id")
+    private IoTDevice pairedIoT;
+
 }
-

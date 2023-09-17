@@ -13,9 +13,9 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Voter {
-    @Id
+public class Voter extends User {
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private boolean hasVoted;
 
 }

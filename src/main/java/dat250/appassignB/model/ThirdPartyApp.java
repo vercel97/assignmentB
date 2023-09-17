@@ -12,10 +12,17 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class ThirdPartyApp {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @EqualsAndHashCode.Include
+    private int id;
 
+    @Getter
+    @Setter
+    private Integer pollID;
+
+    private static void getPollStatus(Integer pollID){
+        //TODO: implement
+    }
 }

@@ -1,5 +1,4 @@
 package dat250.appassignB.model;
-
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -11,17 +10,12 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class IoTdevice {
+public class IoTDisplay {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
-    private Integer redVotes;
-    private Integer greenVotes;
-
-    // One-to-One relationship with Poll
     @OneToOne
-    @JoinColumn(name = "poll_id")
-    private Poll poll;
+    private IoTDevice device;
 }
-
