@@ -39,24 +39,27 @@ public class MainApp {
         IoTDisplay display = new IoTDisplay();
         device.setDisplay(display);
         display.setDevice(device);
-        em.persist(device);
-        em.persist(display);
+        device.setGreenVotes(5);
+        device.setRedVotes(23);
+
 
         // Create Poll
         Poll poll = new Poll();
         poll.setPairedIoT(device);
+        poll.setDuration(100);
+        poll.setPrivate(false);
         device.setPairedPoll(poll);
-        em.persist(poll);
+
 
         // Create User
-        User user = new User();
-        user.setUsername("username1");
-        user.setEmail("user1@example.com");
-        user.setPassword("password1");
-        List<Poll> userPolls = new ArrayList<>();
+        AppUser a_user = new AppUser();
+        a_user.setUsername("username1");
+        a_user.setEmail("user1@example.com");
+        a_user.setPassword("password1");
+        List<Poll> userPolls = new ArrayList<Poll>();
         userPolls.add(poll);
-        user.setPolls(userPolls);
-        em.persist(user);
+        a_user.setPolls(userPolls);
+
 
         // Create Voter, which is a subclass of User
         Voter voter = new Voter();
@@ -64,15 +67,20 @@ public class MainApp {
         voter.setEmail("voter1@example.com");
         voter.setPassword("password1");
         voter.setHasVoted(false);
-        em.persist(voter);
+
 
         // Create WebClient
-        WebClient webClient = new WebClient();
-        webClient.setRedVotes(10);
-        webClient.setGreenVotes(20);
-        em.persist(webClient);
+        AppWebClient appWebClient = new AppWebClient();
+        appWebClient.setRedVotes(10);
+        appWebClient.setGreenVotes(20);
 
-        // You can add more test data as per your requirements
+
+        em.persist(device);
+        em.persist(display);
+        em.persist(poll);
+        em.persist(a_user);
+        em.persist(voter);
+        em.persist(appWebClient);
     }
 
 

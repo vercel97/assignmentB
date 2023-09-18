@@ -10,8 +10,13 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Voter extends AppUser {
+public class AppWebClient {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
+    private int id;
 
-    private boolean hasVoted;
+    private Integer redVotes;
 
+    private Integer greenVotes;
 }
