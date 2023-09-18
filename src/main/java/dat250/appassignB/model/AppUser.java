@@ -6,28 +6,25 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class User {
+public class AppUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
+    private int id;
+
     private String username;
-    @Setter
-    @Getter
+
     private String email;
-    @Setter
-    @Getter
+
     private String password;
-    @Setter
-    @Getter
+
     @OneToMany
     private List<Poll> polls;
 
