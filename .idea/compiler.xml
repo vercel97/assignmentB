@@ -8,12 +8,14 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="assignmentB2" />
+        <module name="voting-application" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="assignmentB2" options="--add-modules java.sql" />
+      <module name="voting-application" options="-parameters" />
     </option>
   </component>
 </project>
