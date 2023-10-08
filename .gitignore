@@ -1,0 +1,72 @@
+# Compiled bytecode
+*.class
+
+# Build directories
+target/
+build/
+out/
+
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+
+# Gradle
+.gradle/
+build/
+
+# Files produced by the Gradle Wrapper
+gradlew
+gradlew.bat
+gradle/wrapper/gradle-wrapper.properties
+gradle-wrapper.jar
+
+# IDE-specific files
+# IntelliJ IDEA
+*.iml
+.idea/
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/.name
+.idea/modules.xml
+.idea/modules
+.idea/*.iml
+.idea/modules.xml
+.idea/*.iws
+
+# Eclipse
+*.project
+*.classpath
+*.settings/
+bin/
+
+# NetBeans
+nb-configuration.xml
+nbactions.xml
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+
+# Logs and databases
+*.log
+*.ldb
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Other
+*.bak
+*.swp
+*~
+*.nib
