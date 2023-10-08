@@ -14,7 +14,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="assignmentB2" options="--add-modules java.sql" />
+      <module name="assignmentB2" options="-parameters --add-modules java.sql" />
       <module name="voting-application" options="-parameters" />
     </option>
   </component>
