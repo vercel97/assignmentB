@@ -1,0 +1,74 @@
+[
+  {
+    "questionText": "Wonder Woman is from the Marvel Universe.  Select Red for FALSE or Green for TRUE",
+    "response": false,
+    "username": "Diana Prince",
+    "pollTitle": "First Poll"
+  },
+  {
+    "questionText": "Bleach is classic magna.  Select Red for FALSE or Green for TRUE",
+    "response": true,
+    "username": "Diana Prince",
+    "pollTitle": "First Poll"
+  },
+  {
+    "questionText": "Winter is coming. Select Red for FALSE or Green for TRUE",
+    "response": false,
+    "username": "Diana Prince",
+    "pollTitle": "First Poll"
+  },
+  {
+    "questionText": "Wonder Woman is from the Marvel Universe.  Select Red for FALSE or Green for TRUE",
+    "response": false,
+    "username": "yoruichi shihouin",
+    "pollTitle": "First Poll"
+  },
+  {
+    "questionText": "Bleach is classic magna.  Select Red for FALSE or Green for TRUE",
+    "response": true,
+    "username": "yoruichi shihouin",
+    "pollTitle": "First Poll"
+  },
+  {
+    "questionText": "Winter is coming. Select Red for FALSE or Green for TRUE",
+    "response": true,
+    "username": "yoruichi shihouin",
+    "pollTitle": "First Poll"
+  },
+  {
+    "questionText": "Which is your favorite color?",
+    "response": true,
+    "username": "Diana Prince",
+    "pollTitle": "Private Sample Poll"
+  },
+  {
+    "questionText": "Which is a Christmas color?",
+    "response": true,
+    "username": "Diana Prince",
+    "pollTitle": "Private Sample Poll"
+  },
+  {
+    "questionText": "Which color signifies the command to STOP?",
+    "response": false,
+    "username": "Diana Prince",
+    "pollTitle": "Private Sample Poll"
+  },
+  {
+    "questionText": "Which is your favorite color?",
+    "response": false,
+    "username": "yoruichi shihouin",
+    "pollTitle": "Private Sample Poll"
+  },
+  {
+    "questionText": "Which is a Christmas color?",
+    "response": true,
+    "username": "yoruichi shihouin",
+    "pollTitle": "Private Sample Poll"
+  },
+  {
+    "questionText": "Which color signifies the command to STOP?",
+    "response": false,
+    "username": "yoruichi shihouin",
+    "pollTitle": "Private Sample Poll"
+  }
+]

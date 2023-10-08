@@ -76,10 +76,12 @@ public class VotingApplication {
         JsonReader jsonReader = new JsonReader();
         List<AppUser> userList = new ArrayList<>();
         List<Poll> pollList = new ArrayList<>();
+        List<Question> questionList = new ArrayList<>();
 
         try{
             userList = jsonReader.readUserData("src/main/resources/data/userdata.json");
             pollList = jsonReader.readPollData("src/main/resources/data/polldata.json");
+            questionList = jsonReader.readVotingData("src/main/resources/data/votingdata.json");
         } catch (IOException e){
             e.printStackTrace();
         }
@@ -94,7 +96,9 @@ public class VotingApplication {
             em.persist(aPoll);
         }
 
-
+        for (Question aVote : questionList ){
+            em.persist(aVote);
+        }
 
 
         /*em.persist(device);

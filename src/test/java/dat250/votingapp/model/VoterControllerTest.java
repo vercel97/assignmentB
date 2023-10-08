@@ -2,6 +2,9 @@ package dat250.votingapp.model;
 
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
+
+import dat250.votingapp.controller.VoterController;
+import dat250.votingapp.repository.VoterRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

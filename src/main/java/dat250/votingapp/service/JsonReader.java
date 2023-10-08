@@ -35,4 +35,15 @@ public class JsonReader {
        return polls;
    }
 
+    public List<Question> readVotingData(String filePath) throws IOException {
+        // Read polls.json
+        List<Question> votes = objectMapper.readValue(new File(filePath), new TypeReference<List<Question>>() {
+        });
+        for (Question vote : votes) {
+            System.out.println(vote.getQuestionText());
+        }
+
+        return votes;
+    }
+
 }
