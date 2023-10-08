@@ -1,0 +1,44 @@
+[
+{
+  "pollTitle": "First Poll",
+  "private": "False",
+  "questionList": [
+    {
+      "questionText": "Wonder Woman is from the Marvel Universe.  Select Red for FALSE or Green for TRUE",
+      "response": null
+    },
+    {
+      "questionText": "Bleach is classic magna.  Select Red for FALSE or Green for TRUE",
+      "response": null
+    },
+    {
+      "questionText": "Winter is coming. Select Red for FALSE or Green for TRUE",
+      "response": null
+    }
+  ]
+},
+  {
+    "pollTitle": "Private Sample Poll",
+    "private": true,
+    "authorizedUsers": [
+      {"username": "Diana Prince"},
+      {"username": "Yoruichi Shihouin"}
+    ],
+    "questionList": [
+      {
+        "questionText": "Which is your favorite color?",
+        "response": null
+      },
+      {
+        "questionText": "Which is a Christmas color?",
+        "response": null
+      },
+      {
+        "questionText": "Which color signifies the command to STOP?",
+        "response": null
+      }
+    ]
+  }
+]
+
+

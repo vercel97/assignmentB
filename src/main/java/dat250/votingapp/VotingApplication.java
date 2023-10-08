@@ -1,19 +1,18 @@
-package dat250.appassignB.model.driver;
+package dat250.votingapp;
 
-import dat250.appassignB.model.*;
+import dat250.votingapp.model.*;
+import dat250.votingapp.service.JsonReader;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.Statement;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.util.*;
+import java.io.IOException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
-public class MainApp {
+public class VotingApplication {
     static final String PERSISTENCE_UNIT_NAME = "g4-appassignA";
 
     public static void main(String[] args) {
@@ -34,9 +33,9 @@ public class MainApp {
     }
     private static void createTestData(EntityManager em) {
 
-        // Create IoTDevice with associated IoTDisplay
-        IoTDevice device = new IoTDevice();
-        IoTDisplay display = new IoTDisplay();
+        /*// Create IoTDevice with associated IoTDisplay
+        IoTDevice1 device = new IoTDevice1();
+        IoTDisplay1 display = new IoTDisplay1();
         device.setDisplay(display);
         display.setDevice(device);
         device.setGreenVotes(5);
@@ -44,7 +43,7 @@ public class MainApp {
 
 
         // Create Poll
-        Poll poll = new Poll();
+        Poll1 poll = new Poll1();
         poll.setPairedIoT(device);
         poll.setDuration(100);
         poll.setPrivate(false);
@@ -52,17 +51,17 @@ public class MainApp {
 
 
         // Create User
-        AppUser a_user = new AppUser();
+        AppUser1 a_user = new AppUser1();
         a_user.setUsername("username1");
         a_user.setEmail("user1@example.com");
         a_user.setPassword("password1");
-        List<Poll> userPolls = new ArrayList<Poll>();
+        List<Poll1> userPolls = new ArrayList<Poll1>();
         userPolls.add(poll);
         a_user.setPolls(userPolls);
 
 
         // Create Voter, which is a subclass of User
-        Voter voter = new Voter();
+        Voter1 voter = new Voter1();
         voter.setUsername("voter1");
         voter.setEmail("voter1@example.com");
         voter.setPassword("password1");
@@ -70,17 +69,40 @@ public class MainApp {
 
 
         // Create WebClient
-        AppWebClient appWebClient = new AppWebClient();
+        AppWebClient1 appWebClient = new AppWebClient1();
         appWebClient.setRedVotes(10);
-        appWebClient.setGreenVotes(20);
+        appWebClient.setGreenVotes(20);*/
+
+        JsonReader jsonReader = new JsonReader();
+        List<AppUser> userList = new ArrayList<>();
+        List<Poll> pollList = new ArrayList<>();
+
+        try{
+            userList = jsonReader.readUserData("src/main/resources/data/userdata.json");
+            pollList = jsonReader.readPollData("src/main/resources/data/polldata.json");
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+
+        //iterate through the list to persist users
+        for (AppUser aUser : userList ){
+            em.persist(aUser);
+        }
+
+        //iterate through the list to persist polls
+        for (Poll aPoll : pollList ){
+            em.persist(aPoll);
+        }
 
 
-        em.persist(device);
+
+
+        /*em.persist(device);
         em.persist(display);
         em.persist(poll);
         em.persist(a_user);
         em.persist(voter);
-        em.persist(appWebClient);
+        em.persist(appWebClient);*/
     }
 
 

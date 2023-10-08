@@ -1,4 +1,4 @@
-package dat250.appassignB.model;
+package dat250.votingapp.model;
 
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;

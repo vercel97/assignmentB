@@ -1,4 +1,4 @@
-package dat250.appassignB.model.driver;
+package dat250.votingapp;
 
         import org.h2.tools.Server;
         import java.sql.SQLException;

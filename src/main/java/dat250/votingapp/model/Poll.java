@@ -1,4 +1,4 @@
-package dat250.appassignB.model;
+package dat250.votingapp.model;
 
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
@@ -6,8 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Getter
@@ -24,11 +23,16 @@ public class Poll {
 
     private int duration;
 
-    //@OneToOne
-    //private PollData pollData;
-
     @OneToOne(mappedBy = "pairedPoll")
     //@JoinColumn(name = "iot_device_id")
     private IoTDevice pairedIoT;
+
+    private String pollTitle;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<AppUser> authorizedUsers;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Question> questionList;
 
 }

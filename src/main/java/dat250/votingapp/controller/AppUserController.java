@@ -1,8 +1,11 @@
-package dat250.appassignB.model;
+package dat250.votingapp.controller;
 
+import dat250.votingapp.model.AppUser;
+import dat250.votingapp.repository.AppUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.Optional;
 

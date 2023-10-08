@@ -1,5 +1,9 @@
-package dat250.appassignB.model;
-import jakarta.persistence.*;
+package dat250.votingapp.model;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,14 +14,13 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class WebClient {
+public class AppWebClient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
-    @Setter
-    @Getter
+    private int id;
+
     private Integer redVotes;
-    @Setter
-    @Getter
+
     private Integer greenVotes;
 }
