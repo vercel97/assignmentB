@@ -1,7 +1,11 @@
-package dat250.appassignB.model;
+package dat250.votingapp.model;
+
 
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
+
+import dat250.votingapp.controller.AppUserController;
+import dat250.votingapp.repository.AppUserRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

@@ -1,34 +1,26 @@
-package dat250.appassignB.model;
+package dat250.votingapp.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.List;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class AppUser {
+public class AppWebClient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     private int id;
 
-    private String username;
+    private Integer redVotes;
 
-    private String email;
-
-    private String password;
-
-    @OneToMany
-    private List<Poll> polls;
-
-    // Constructors
-
+    private Integer greenVotes;
 }
-

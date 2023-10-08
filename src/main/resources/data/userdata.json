@@ -1,0 +1,17 @@
+[
+  {
+    "username": "Diana Prince",
+    "email": "diana.prince@wonderwoman.com",
+    "password": "DianaSecretPassword123"
+  },
+  {
+    "username": "yoruichi shihouin",
+    "email": "yoruichi.shihouin@bleach.com",
+    "password": "YoruichiSecretPassword123"
+  },
+  {
+    "username": "Yor Forger",
+    "email": "yor.forger@spyfamily.com",
+    "password": "YorSecretPassword123"
+  }
+]

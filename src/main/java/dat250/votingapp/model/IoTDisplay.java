@@ -1,4 +1,5 @@
-package dat250.appassignB.model;
+package dat250.votingapp.model;
+
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -10,14 +11,12 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class WebClient {
+public class IoTDisplay {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @EqualsAndHashCode.Include
-    @Setter
-    @Getter
-    private Integer redVotes;
-    @Setter
-    @Getter
-    private Integer greenVotes;
+    private Long id;
+
+    @OneToOne
+    private IoTDevice device;
 }

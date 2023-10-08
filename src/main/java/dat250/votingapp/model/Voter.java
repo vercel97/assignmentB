@@ -1,5 +1,6 @@
-package dat250.appassignB.model;
-import jakarta.persistence.*;
+package dat250.votingapp.model;
+
+import jakarta.persistence.Entity;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
