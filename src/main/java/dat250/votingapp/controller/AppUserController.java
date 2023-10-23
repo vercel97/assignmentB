@@ -2,10 +2,10 @@ package dat250.votingapp.controller;
 
 import dat250.votingapp.model.AppUser;
 import dat250.votingapp.repository.AppUserRepository;
+import dat250.votingapp.service.AppUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -15,6 +15,9 @@ public class AppUserController {
 
     @Autowired
     private AppUserRepository appUserRepository;
+
+    @Autowired
+    private AppUserService userService;
 
     @GetMapping
     public List<AppUser> getAllAppUsers() {
@@ -56,5 +59,20 @@ public class AppUserController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @PostMapping("/register")
+    public AppUser registerUser(@RequestBody AppUser user) {
+        return userService.save(user);
+    }
+
+    @PostMapping("/login")
+    public AppUser loginUser(@RequestBody AppUser user) {
+        return userService.findByUsername(user.getUsername()).orElse(null);
+    }
+
+    @GetMapping("/logout")
+    public String logout() {
+        return "Logged out successfully!";
     }
 }
