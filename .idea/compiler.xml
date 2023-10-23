@@ -11,10 +11,13 @@
         <module name="voting-application" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="frontend" target="17" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="assignmentB2" options="-parameters --add-modules java.sql" />
+      <module name="assignmentB2" options="-parameters" />
       <module name="voting-application" options="-parameters" />
     </option>
   </component>
