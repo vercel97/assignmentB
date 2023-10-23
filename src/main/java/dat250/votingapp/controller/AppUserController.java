@@ -3,6 +3,7 @@ package dat250.votingapp.controller;
 import dat250.votingapp.model.AppUser;
 import dat250.votingapp.repository.AppUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +17,7 @@ public class AppUserController {
     @Autowired
     private AppUserRepository appUserRepository;
 
-    @GetMapping
+    @GetMapping("/{login}")
     public List<AppUser> getAllAppUsers() {
         return appUserRepository.findAll();
     }
@@ -34,6 +35,16 @@ public class AppUserController {
     @PostMapping
     public AppUser createAppUser(@RequestBody AppUser appUser) {
         return appUserRepository.save(appUser);
+    }
+
+    //authentification
+    @PostMapping("/login")
+    public ResponseEntity<?> authenticateUser(@RequestBody AppUser loginUser) {
+        AppUser existingUser = appUserRepository.findByUsername(loginUser.getUsername());
+        if (existingUser != null && loginUser.getPassword().equals(existingUser.getPassword())) {
+            return ResponseEntity.ok("Logged in successfully");
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
     }
 
     @PutMapping("/{id}")
