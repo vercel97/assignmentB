@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
 
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -21,7 +20,7 @@ export class LoginComponent {
 
   onSubmit() {
     if (this.loginForm.valid) {
-      this.authService.login(this.loginForm.value.username, this.loginForm.value.password)
+      this.authService.login(this.loginForm.value)
       .subscribe(
         (response: any) => {
           // handle successful login
@@ -34,22 +33,7 @@ export class LoginComponent {
     }
   }
 
-  onRegister() {
-    if (this.loginForm.valid) {
-      const { username, password } = this.loginForm.value;
-      this.authService.register(username, password).subscribe(
-        response => {
-          alert('Registration successful!');
-          this.loginForm.reset();
-        },
-        error => {
-          alert('Registration failed! ' + error.error);
-        }
-      );
-    } else {
-      alert('Please fill out the form correctly.');
-    }
-  }
+
 }
 
 

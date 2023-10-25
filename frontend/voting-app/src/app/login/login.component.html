@@ -12,12 +12,11 @@
     <label for="password">Password:</label>
     <input type="password" id="password" formControlName="password">
     <p *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid">
-      Password needs to be at least 8 signs
+      Please provide a valid password.
     </p>
   </div>
 
-  <button type="submit" (click)="onSubmit()">Logg inn</button>
-  <button (click)="onRegister()">Create new user</button>
-
+  <button type="submit" (click)="onSubmit()">Log in</button>
+  <p>New user? <a routerLink="/register">Register here</a></p>
 </form>
 
