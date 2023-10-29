@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-login',
@@ -11,7 +13,7 @@ export class LoginComponent {
 
   loginForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private authService: AuthService) {
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required]
@@ -23,17 +25,22 @@ export class LoginComponent {
       this.authService.login(this.loginForm.value)
       .subscribe(
         (response: any) => {
-          // handle successful login
-          // for example, store the token in local storage
+          if (response.id) {
+              this.router.navigate(['/main-page']);
+          } else {
+            alert('Feil brukernavn eller passord.');
+          }
         },
         (error: any) => {
-          // handle login error
+          if (error.status === 401) {
+            alert('Feil brukernavn eller passord.');
+          } else {
+            alert('En feil oppstod under innlogging.');
+          }
         }
       );
     }
   }
-
-
 }
 
 

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin(origins = "http://localhost:4200")
 
 @RestController
 @RequestMapping("/api/polls")
@@ -30,6 +31,11 @@ public class PollController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @GetMapping("/search")
+    public List<Poll> getPollsByTitle(@RequestParam String title) {
+        return pollRepository.findByTitleContainingIgnoreCase(title);
     }
 
     @PostMapping

@@ -1,0 +1,38 @@
+<form [formGroup]="pollForm" (submit)="onSubmit()" class="poll-form">
+  <div class="form-group">
+    <label for="isPrivate">Is Private:</label>
+    <input id="isPrivate" type="checkbox" formControlName="isPrivate">
+  </div>
+
+  <div class="form-group">
+    <label for="duration">Duration:</label>
+    <input id="duration" type="text" formControlName="duration">
+  </div>
+
+  <div class="form-group">
+    <label for="pollTitle">Poll Title:</label>
+    <input id="pollTitle" type="text" formControlName="pollTitle">
+  </div>
+  <div class="form-group">
+    <label for="newQuestion">Add Question:</label>
+    <input id="newQuestion" type="text" #questionInput>
+    <button (click)="addQuestion(questionInput.value); questionInput.value='';">Legg til</button>
+  </div>
+
+  <div *ngFor="let questionControl of questions.controls; let i = index" class="form-group">
+    <input type="text" [formControl]="getFormControl(questionControl)">
+    <button (click)="removeQuestion(i)">Fjern</button>
+  </div>
+
+
+
+
+  <div class="form-group">
+    <label for="authorizedUsers">Authorized Users:</label>
+    <textarea id="authorizedUsers" rows="3" formControlName="authorizedUsers"></textarea>
+    <small class="form-text text-muted">Enter user names separated by comma.</small>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Create Poll</button>
+</form>
+

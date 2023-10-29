@@ -1,0 +1,17 @@
+<div class="input-group">
+  <input class="search-input" [(ngModel)]="searchId" placeholder="Enter poll ID">
+  <button class="search-button" (click)="findPoll()">Search</button>
+</div>
+
+<div class="input-group">
+  <input class="search-input" [(ngModel)]="searchTitle" placeholder="Enter poll title">
+  <button class="search-button" (click)="searchPollsByTitle()">Search by Title</button>
+</div>
+
+<div *ngIf="poll">
+  <h2 class="result-title">{{ poll.pollTitle }}</h2>
+</div>
+
+<div *ngFor="let poll of polls">
+  <h2 class="result-title">{{ poll.pollTitle }}</h2>
+</div>
