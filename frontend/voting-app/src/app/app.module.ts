@@ -15,6 +15,7 @@ import { RegistrationComponent } from './register/register.component';
 import { MainPageComponent } from './main-page/main-page.component';
 import { CreatePollComponent } from './create-poll/create-poll.component';
 import { FindPollComponent } from './find-poll/find-poll.component';
+import { VoteComponent } from './vote/vote.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { FindPollComponent } from './find-poll/find-poll.component';
     RegistrationComponent,
     MainPageComponent,
     CreatePollComponent,
-    FindPollComponent
+    FindPollComponent,
+    VoteComponent
   ],
   imports: [
     BrowserModule,

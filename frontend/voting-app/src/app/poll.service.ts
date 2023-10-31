@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Poll } from './models/poll.model';
+import { Poll, Question } from './models/poll.model';
 
 
 @Injectable({
@@ -12,7 +12,6 @@ export class PollService {
   private apiUrl = 'http://localhost:8080/api/polls';
 
   constructor(private http: HttpClient) { }
-
 
   getAllPolls(): Observable<Poll[]> {
     return this.http.get<Poll[]>(this.apiUrl);

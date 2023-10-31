@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Poll } from '../models/poll.model';
 import { PollService } from '../poll.service';
-
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -16,7 +16,7 @@ export class FindPollComponent {
   polls: Poll[] = [];
 
 
-  constructor(private pollService: PollService) {}
+  constructor(private pollService: PollService, private router:Router) {}
 
   findPoll() {
     this.pollService.findPoll(this.searchId).subscribe(
@@ -39,6 +39,15 @@ export class FindPollComponent {
           }
       );
   }
+
+  voteOnPoll(pollId?: number) {
+      if (pollId !== undefined) {
+          this.router.navigate(['/vote', pollId]);  // Antatt rute: '/vote/:id'
+      } else {
+          console.error('Poll ID is undefined.');
+      }
+  }
+
 
 }
 
