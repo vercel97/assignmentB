@@ -1,0 +1,7 @@
+<!-- voting.component.html -->
+<h3>{{ poll.pollTitle }}</h3>
+<div *ngFor="let question of poll.questionList">
+  <p>{{ question.questionText }}</p>
+  <button (click)="voteOnQuestion(question, true)">Yes</button>
+  <button (click)="voteOnQuestion(question, false)">No</button>
+</div>

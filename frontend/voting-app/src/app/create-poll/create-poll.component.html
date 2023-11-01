@@ -1,0 +1,39 @@
+<form>
+  <div class="form-group">
+    <label for="pollTitle">Poll Title:</label>
+    <input type="text" class="form-control" [(ngModel)]="poll.pollTitle" id="pollTitle" required>
+  </div>
+
+  <div class="form-group">
+    <label for="isPrivate">Is Private:</label>
+    <input type="checkbox" [(ngModel)]="poll.isPrivate" id="isPrivate">
+  </div>
+
+  <div class="form-group">
+    <label for="duration">Duration (in minutes):</label>
+    <input type="number" class="form-control" [(ngModel)]="poll.duration" id="duration" required>
+  </div>
+
+
+  <div *ngFor="let question of poll.questionList; let i = index">
+    <h5>Question {{ i + 1 }}</h5>
+
+    <div class="form-group">
+      <label for="questionText">Question Text:</label>
+      <input type="text" class="form-control" [(ngModel)]="question.questionText" id="questionText" required>
+    </div>
+
+    <div class="form-group">
+      <label for="response">Response:</label>
+      <input type="checkbox" [(ngModel)]="question.response" id="response">
+    </div>
+
+
+  </div>
+
+  <button type="button" class="btn btn-primary" (click)="addQuestion()">Add Question</button>
+
+  <button type="button" class="btn btn-success" (click)="createPoll()">Create Poll</button>
+
+
+</form>
