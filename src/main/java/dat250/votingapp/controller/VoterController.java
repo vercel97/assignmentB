@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+@Deprecated
 @RestController
 @RequestMapping("/api/voters")
 public class VoterController {

@@ -121,13 +121,13 @@
             <artifactId>jackson-databind</artifactId>
         </dependency>
 
-        <!-- Spring Security -->
+        <!-- Spring Security
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
 
-        <!-- JWT -->
+        <!- JWT
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt</artifactId>
@@ -137,7 +137,7 @@
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
             <version>3.1.0</version>
-        </dependency>
+        </dependency>  -->
 
     </dependencies>
 
