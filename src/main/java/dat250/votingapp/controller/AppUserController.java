@@ -2,14 +2,14 @@ package dat250.votingapp.controller;
 
 import dat250.votingapp.model.AppUser;
 import dat250.votingapp.model.Poll;
-import dat250.votingapp.repository.AppUserRepository;
-import dat250.votingapp.repository.PollRepository;
-import dat250.votingapp.service.AppUserService;
-import dat250.votingapp.service.UserValidationResult;
+import dat250.votingapp.repository.*;
+import dat250.votingapp.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,6 +23,9 @@ public class AppUserController {
 
     @Autowired
     private AppUserService userService;
+
+    @Autowired
+    private JwtService jwtService;
 
     @GetMapping
     public List<AppUser> getAllAppUsers() {
@@ -78,93 +81,106 @@ public class AppUserController {
 
     /**
      * Checks the username and password (login)
+     *
      * @param user
      * @return
      */
     @PostMapping("/login")
-    public UserValidationResult loginUser(@RequestBody AppUser user) {
-        return userService.validateUser(user.getUsername(), user.getPassword()).orElse(null);
+    public ResponseEntity<String> loginUser(@RequestBody AppUser user) {
+        UserValidationResult validationResult = userService.validateUser(user.getUsername(), user.getPassword()).orElse(null);
+        if (validationResult.getUser() != null) {
+            String token = jwtService.generateToken(user.getUsername());
+            return ResponseEntity.ok(token);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
+        }
     }
 
-    @GetMapping("/logout")
-    public String logout() {
-        return "Logged out successfully!";
-    }
+        @GetMapping("/logout")
+        public ResponseEntity<String> logout(@RequestHeader HttpServletRequest requestHeader) {
 
-    @PostMapping("/verify")
-    public ResponseEntity<Void> verifyUser(@RequestParam String username) {
-        //TODO: confirm correct code, set verified = true
-        throw new UnsupportedOperationException("verifyUser Not implemented");
-    }
+            String token = requestHeader.getHeader("Authenticator");
+            if (token != null && token.startsWith("Bearer ")) {
+                token = token.substring(7);
 
-    @PostMapping("/createPoll")
-    public ResponseEntity<Void> createPoll(@RequestParam String title) {
-        if (title == null || title.trim().isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                jwtService.invalidateToken(token);
+            }
+
+        return ResponseEntity.ok("Logged out successfully!");
         }
 
-        Poll newPoll = new Poll();
-        newPoll.setPollTitle(title);
-        pollRepository.save(newPoll);
 
-        return new ResponseEntity<>(HttpStatus.CREATED);
-    }
-
-
-    /**
-     * Returns the polls in the users poll list
-     *
-     * @param username
-     * @return
-     */
-    @GetMapping("/viewUserPollList")
-    public ResponseEntity<List<Poll>> viewPollList(@RequestParam String username) {
-        if (username == null || username.trim().isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        @PostMapping("/verify")
+        public ResponseEntity<String> verifyUser(@RequestParam String username) {
+            //TODO: confirm correct code, set verified = true
+            throw new UnsupportedOperationException("verifyUser Not implemented");
         }
 
-        Optional<AppUser> ap = appUserRepository.findByUsername(username);
+        @PostMapping("/createPoll")
+        public ResponseEntity<Void> createPoll(@RequestParam String title) {
+            if (title == null || title.trim().isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
 
-        if (ap.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            Poll newPoll = new Poll();
+            newPoll.setPollTitle(title);
+            pollRepository.save(newPoll);
+
+            return new ResponseEntity<>(HttpStatus.CREATED);
         }
 
-        List<Poll> polls = ap.get().getPolls();
-        return new ResponseEntity<>(polls, HttpStatus.OK);
+
+        /**
+         * Returns the polls in the users poll list
+         *
+         * @param username
+         * @return
+         */
+        @GetMapping("/viewUserPollList")
+        public ResponseEntity<List<Poll>> viewPollList(@RequestParam String username) {
+            if (username == null || username.trim().isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+
+            Optional<AppUser> ap = appUserRepository.findByUsername(username);
+
+            if (ap.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+
+            List<Poll> polls = ap.get().getPolls();
+            return new ResponseEntity<>(polls, HttpStatus.OK);
+        }
+
+
+        @PostMapping("/openPoll")
+        public ResponseEntity<Void> openPoll(@RequestParam String pollTitle) {
+            //TODO: call open poll
+            throw new UnsupportedOperationException("openPoll Not implemented");
+        }
+
+        @PostMapping("/closePoll")
+        public ResponseEntity<Void> closePoll(@RequestParam String pollTitle) {
+            //TODO: call close poll
+            throw new UnsupportedOperationException("closePoll Not implemented");
+        }
+
+        @PostMapping("/deletePoll")
+        public ResponseEntity<Void> deletePoll(@RequestParam String pollTitle) {
+            //TODO: call to delete poll
+            throw new UnsupportedOperationException("deletePoll Not implemented");
+        }
+
+        @PostMapping("/reviewPoll")
+        public ResponseEntity<Void> reviewPoll(@RequestParam String pollTitle) {
+            //TODO: call preview poll
+            throw new UnsupportedOperationException("reviewPoll Not implemented");
+        }
+
+        @PostMapping("/editPoll")
+        public ResponseEntity<Void> editPoll(@RequestParam String pollTitle) {
+            //TODO: call edit poll, i.e. add/remove questions
+            throw new UnsupportedOperationException("editPoll Not implemented");
+        }
+
     }
-
-
-    @PostMapping("/openPoll")
-    public ResponseEntity<Void> openPoll(@RequestParam String pollTitle) {
-        //TODO: call open poll
-        throw new UnsupportedOperationException("openPoll Not implemented");
-    }
-
-    @PostMapping("/closePoll")
-    public ResponseEntity<Void> closePoll(@RequestParam String pollTitle) {
-        //TODO: call close poll
-        throw new UnsupportedOperationException("closePoll Not implemented");
-    }
-
-    @PostMapping("/deletePoll")
-    public ResponseEntity<Void> deletePoll(@RequestParam String pollTitle) {
-        //TODO: call to delete poll
-        throw new UnsupportedOperationException("deletePoll Not implemented");
-    }
-
-    @PostMapping("/reviewPoll")
-    public ResponseEntity<Void> reviewPoll(@RequestParam String pollTitle) {
-        //TODO: call preview poll
-        throw new UnsupportedOperationException("reviewPoll Not implemented");
-    }
-
-    @PostMapping("/editPoll")
-    public ResponseEntity<Void> editPoll(@RequestParam String pollTitle) {
-        //TODO: call edit poll, i.e. add/remove questions
-        throw new UnsupportedOperationException("editPoll Not implemented");
-    }
-
-
-
-
-}
