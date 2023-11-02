@@ -20,4 +20,7 @@ public class Question {
     private boolean response;
     private String username;
     private String pollTitle;
+    //private DateTimeFormat starttime;
+    //private DateTimeFormat endtime;
+    private boolean isActive;
 }
