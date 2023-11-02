@@ -56,6 +56,7 @@ public class PollController {
         return pollRepository.save(poll);
     }
 
+    @Deprecated
     @PostMapping("/createPoll")
     public ResponseEntity<Void> createPoll(@RequestParam String title) {
         if (title == null || title.trim().isEmpty()) {
@@ -103,6 +104,7 @@ public class PollController {
         throw new UnsupportedOperationException("closePoll Not implemented");
     }
 
+    @Deprecated
     @PostMapping("/deletePoll")
     public ResponseEntity<Void> deletePoll(@RequestParam String pollTitle) {
         //TODO: call to delete poll
@@ -115,6 +117,7 @@ public class PollController {
         throw new UnsupportedOperationException("reviewPoll Not implemented");
     }
 
+    @Deprecated
     @PostMapping("/editPoll")
     public ResponseEntity<Void> editPoll(@RequestParam String pollTitle) {
         //TODO: call edit poll, i.e. add/remove questions

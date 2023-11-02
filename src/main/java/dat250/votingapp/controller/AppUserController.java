@@ -80,22 +80,27 @@ public class AppUserController {
         return userService.save(user);
     }
 
+    @PostMapping("/login")
+    public AppUser loginUser(@RequestBody AppUser user) {
+        return userService.findByUsername(user.getUsername()).orElse(null);
+    }
+
     /**
      * Checks the username and password (login)
      *
      * @param user
      * @return
-     */
+     *
     @PostMapping("/login")
     public ResponseEntity<String> loginUser(@RequestBody AppUser user) {
         UserValidationResult validationResult = userService.validateUser(user.getUsername(), user.getPassword()).orElse(null);
         if (validationResult.getUser() != null) {
             String token = jwtService.generateToken(user.getUsername());
-            return ResponseEntity.ok(token);
+            return ResponseEntity.ok("ok"); //token);
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
         }
-    }
+    } */
 
     /**
      * Logout user and invalidate token
