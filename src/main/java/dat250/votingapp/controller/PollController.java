@@ -33,11 +33,23 @@ public class PollController {
         }
     }
 
+    /**
+     * Searches for a poll by title (Find-Poll)
+     *
+     * @param title
+     * @return
+     */
     @GetMapping("/search")
     public List<Poll> getPollsByTitle(@RequestParam String title) {
         return pollRepository.findByTitleContainingIgnoreCase(title);
     }
 
+    /**
+     * Creates a new poll (Create-Poll)
+     *
+     * @param poll
+     * @return
+     */
     @PostMapping
     public Poll createPoll(@RequestBody Poll poll) {
         return pollRepository.save(poll);

@@ -77,7 +77,7 @@ public class AppUserController {
     }
 
     /**
-     * Checks the username and password
+     * Checks the username and password (login)
      * @param user
      * @return
      */
