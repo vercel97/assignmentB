@@ -28,6 +28,8 @@ public class AppUser {
     @OneToMany
     private List<Poll> polls;
 
+    private Boolean isVerified;
+
     // Constructors
 
 

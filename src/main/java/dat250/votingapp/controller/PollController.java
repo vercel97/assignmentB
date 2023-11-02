@@ -3,6 +3,7 @@ package dat250.votingapp.controller;
 import dat250.votingapp.model.Poll;
 import dat250.votingapp.repository.PollRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -55,6 +56,19 @@ public class PollController {
         return pollRepository.save(poll);
     }
 
+    @PostMapping("/createPoll")
+    public ResponseEntity<Void> createPoll(@RequestParam String title) {
+        if (title == null || title.trim().isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        Poll newPoll = new Poll();
+        newPoll.setPollTitle(title);
+        pollRepository.save(newPoll);
+
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<Poll> updatePoll(@PathVariable int id, @RequestBody Poll updatedPoll) {
         Optional<Poll> poll = pollRepository.findById(id);
@@ -76,5 +90,36 @@ public class PollController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @PostMapping("/openPoll")
+    public ResponseEntity<Void> openPoll(@RequestParam String pollTitle) {
+        //TODO: call open poll
+        throw new UnsupportedOperationException("openPoll Not implemented");
+    }
+
+    @PostMapping("/closePoll")
+    public ResponseEntity<Void> closePoll(@RequestParam String pollTitle) {
+        //TODO: call close poll
+        throw new UnsupportedOperationException("closePoll Not implemented");
+    }
+
+    @PostMapping("/deletePoll")
+    public ResponseEntity<Void> deletePoll(@RequestParam String pollTitle) {
+        //TODO: call to delete poll
+        throw new UnsupportedOperationException("deletePoll Not implemented");
+    }
+
+    @PostMapping("/reviewPoll")
+    public ResponseEntity<Void> reviewPoll(@RequestParam String pollTitle) {
+        //TODO: call preview poll
+        throw new UnsupportedOperationException("reviewPoll Not implemented");
+    }
+
+    @PostMapping("/editPoll")
+    public ResponseEntity<Void> editPoll(@RequestParam String pollTitle) {
+        //TODO: call edit poll, i.e. add/remove questions
+        throw new UnsupportedOperationException("editPoll Not implemented");
+    }
+
 }
 
