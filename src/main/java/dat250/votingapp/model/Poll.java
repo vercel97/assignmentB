@@ -30,7 +30,8 @@ public class Poll {
     private String pollTitle;
 
     @OneToMany(cascade = CascadeType.ALL)
-    private List<Voter> authorizedUsers;
+    //private List<Voter> authorizedUsers;
+    private List<AppUser> authorizedUsers;
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<Question> questionList;

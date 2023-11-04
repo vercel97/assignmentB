@@ -75,4 +75,10 @@ public class AppUserController {
     public String logout() {
         return "Logged out successfully!";
     }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<AppUser>> searchUsers(@RequestParam String username) {
+        List<AppUser> users = userService.searchByUsername(username);
+        return users.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(users);
+    }
 }

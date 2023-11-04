@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { AppUser } from './models/poll.model';
+
 
 
 @Injectable({
@@ -25,6 +28,11 @@ export class AuthService {
 
   register(user: {username: string, email: string, password: string}) {
     return this.http.post(`${this.apiUrl}/register`, user);
+  }
+
+  //used in the create poll component
+  searchUsers(username: string): Observable<AppUser[]> {
+    return this.http.get<AppUser[]>(`${this.apiUrl}/search`, { params: { username } });
   }
 
 }

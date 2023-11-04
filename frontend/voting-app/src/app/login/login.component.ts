@@ -28,14 +28,14 @@ export class LoginComponent {
           if (response.id) {
               this.router.navigate(['/main-page']);
           } else {
-            alert('Feil brukernavn eller passord.');
+            alert('Wrong username or password');
           }
         },
         (error: any) => {
           if (error.status === 401) {
-            alert('Feil brukernavn eller passord.');
+            alert('Wrong username or password');
           } else {
-            alert('En feil oppstod under innlogging.');
+            alert('Login error');
           }
         }
       );
