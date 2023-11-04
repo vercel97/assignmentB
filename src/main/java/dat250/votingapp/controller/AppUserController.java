@@ -2,8 +2,11 @@ package dat250.votingapp.controller;
 
 import dat250.votingapp.model.AppUser;
 import dat250.votingapp.model.Poll;
-import dat250.votingapp.repository.*;
-import dat250.votingapp.service.*;
+import dat250.votingapp.repository.AppUserRepository;
+import dat250.votingapp.repository.PollRepository;
+import dat250.votingapp.service.AppUserService;
+import dat250.votingapp.service.JwtService;
+import dat250.votingapp.service.UserValidationResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +22,6 @@ public class AppUserController {
 
     @Autowired
     private AppUserRepository appUserRepository;
-    private PollRepository pollRepository;
 
     @Autowired
     private AppUserService userService;
@@ -80,27 +82,22 @@ public class AppUserController {
         return userService.save(user);
     }
 
-    @PostMapping("/login")
-    public AppUser loginUser(@RequestBody AppUser user) {
-        return userService.findByUsername(user.getUsername()).orElse(null);
-    }
-
     /**
      * Checks the username and password (login)
      *
      * @param user
      * @return
-     *
+     */
     @PostMapping("/login")
     public ResponseEntity<String> loginUser(@RequestBody AppUser user) {
         UserValidationResult validationResult = userService.validateUser(user.getUsername(), user.getPassword()).orElse(null);
         if (validationResult.getUser() != null) {
             String token = jwtService.generateToken(user.getUsername());
-            return ResponseEntity.ok("ok"); //token);
+            return ResponseEntity.ok(token);
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
         }
-    } */
+    }
 
     /**
      * Logout user and invalidate token
@@ -121,10 +118,23 @@ public class AppUserController {
     }
 
     @PostMapping("/verify")
-    public ResponseEntity<String> verifyUser(@RequestParam String username) {
-        //TODO: confirm correct code, set verified = true
-        throw new UnsupportedOperationException("verifyUser Not implemented");
+    public ResponseEntity<String> verifyUser(@RequestParam String username, @RequestParam String code) {
+        Optional<AppUser> userOpt = appUserRepository.findByUsername(username);
+
+        if (!userOpt.isPresent()) {
+            return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+        }
+
+        AppUser user = userOpt.get();
+        boolean isVerified = userService.verifyUser(user, code);
+
+        if (!isVerified) {
+            return new ResponseEntity<>("Verification failed", HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>("User verified successfully", HttpStatus.OK);
     }
+
 
     /**
      * Returns the polls in the users poll list

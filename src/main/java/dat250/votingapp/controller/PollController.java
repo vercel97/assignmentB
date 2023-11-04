@@ -6,8 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -18,6 +21,9 @@ public class PollController {
 
     @Autowired
     private PollRepository pollRepository;
+
+    @Autowired
+    private RestTemplate restTemplate;
 
     @GetMapping
     public List<Poll> getAllPolls() {
@@ -92,37 +98,72 @@ public class PollController {
         }
     }
 
-    @PostMapping("/openPoll")
-    public ResponseEntity<Void> openPoll(@RequestParam String pollTitle) {
-        //TODO: call open poll
-        throw new UnsupportedOperationException("openPoll Not implemented");
+    @PostMapping("/{id}/open")
+    public ResponseEntity<Void> openPoll(@PathVariable int id) {
+        Optional<Poll> poll = pollRepository.findById(id);
+        if (!poll.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Poll pollToOpen = poll.get();
+        pollToOpen.setStatus(true);
+        pollRepository.save(pollToOpen);
+
+        return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/closePoll")
-    public ResponseEntity<Void> closePoll(@RequestParam String pollTitle) {
-        //TODO: call close poll
-        throw new UnsupportedOperationException("closePoll Not implemented");
+    @PostMapping("/{id}/close")
+    public ResponseEntity<Void> closePoll(@PathVariable int id) {
+        Optional<Poll> poll = pollRepository.findById(id);
+        if (!poll.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Poll pollToClose = poll.get();
+        pollToClose.setStatus(false);
+        Poll closedPoll = pollRepository.save(pollToClose);
+
+        publishResults(closedPoll);
+
+        return ResponseEntity.ok().build();
     }
 
-    @Deprecated
-    @PostMapping("/deletePoll")
-    public ResponseEntity<Void> deletePoll(@RequestParam String pollTitle) {
-        //TODO: call to delete poll
-        throw new UnsupportedOperationException("deletePoll Not implemented");
+    private void publishResults(Poll poll) {
+        String dweetUrl = "https://dweet.io:443/dweet/for/";
+
+        String pollIdentifier = "my_poll_" + poll.getId();
+
+        // Create the payload containing the results
+        Map<String, Object> payload = new HashMap<>();
+        payload.put("pollId", poll.getId());
+        payload.put("pollTitle", poll.getPollTitle());
+
+        try {
+            ResponseEntity<String> response = restTemplate.postForEntity(dweetUrl + pollIdentifier, payload, String.class);
+
+            if (response.getStatusCode() == HttpStatus.CREATED) {
+                System.out.println("Poll results published successfully!");
+            } else {
+                System.out.println("Failed to publish poll results: " + response.getStatusCode());
+            }
+        } catch (Exception e) {
+            System.out.println("An error occurred while publishing poll results: " + e.getMessage());
+        }
     }
 
-    @PostMapping("/reviewPoll")
-    public ResponseEntity<Void> reviewPoll(@RequestParam String pollTitle) {
-        //TODO: call preview poll
-        throw new UnsupportedOperationException("reviewPoll Not implemented");
-    }
+    @GetMapping("/{id}/review")
+    public ResponseEntity<?> reviewPoll(@PathVariable int id) {
+        Optional<Poll> poll = pollRepository.findById(id);
+        if (!poll.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
 
-    @Deprecated
-    @PostMapping("/editPoll")
-    public ResponseEntity<Void> editPoll(@RequestParam String pollTitle) {
-        //TODO: call edit poll, i.e. add/remove questions
-        throw new UnsupportedOperationException("editPoll Not implemented");
-    }
+        Poll pollToReview = poll.get();
+        if (pollToReview.getStatus()) {
+            return ResponseEntity.badRequest().body("Poll is not closed yet.");
+        }
 
+        return ResponseEntity.ok(pollToReview.getResults());
+    }
 }
 

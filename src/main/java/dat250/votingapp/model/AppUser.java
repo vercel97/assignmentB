@@ -28,10 +28,20 @@ public class AppUser {
     @OneToMany
     private List<Poll> polls;
 
-    private Boolean isVerified;
+    @Getter
+    private String verificationCode;
 
-    // Constructors
+    private boolean isVerified;
 
+    public void setVerificationCode(String verificationCode) {
+        this.verificationCode = verificationCode;
+    }
+
+    public boolean getIsVerified() { return isVerified; }
+
+    public void setIsVerified(boolean isVerified) {
+        this.isVerified = isVerified;
+    }
 
 }
 

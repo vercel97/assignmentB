@@ -9,10 +9,10 @@ import java.util.Optional;
 @Service
 public class AppUserService {
     @Autowired
-    private AppUserRepository userRepository;
+    private AppUserRepository appUserRepository;
 
     public AppUser save(AppUser user) {
-        return userRepository.save(user);
+        return appUserRepository.save(user);
     }
 
 
@@ -24,7 +24,7 @@ public class AppUserService {
      * @return
      */
     public Optional<AppUser> findByUsername(String username) {
-        return userRepository.findByUsername(username);
+        return appUserRepository.findByUsername(username);
     }
 
 
@@ -36,7 +36,7 @@ public class AppUserService {
      * @return
      */
     public Optional<UserValidationResult> validateUser(String username, String password) {
-        Optional<AppUser> optionalUser = userRepository.findByUsername(username);
+        Optional<AppUser> optionalUser = appUserRepository.findByUsername(username);
 
         if (optionalUser.isPresent()) {
             AppUser ap = optionalUser.get();
@@ -54,4 +54,24 @@ public class AppUserService {
     }
 
 
+    /**
+     * Verifies a user's account by checking the provided verification code.
+     *
+     * @param user The user to verify.
+     * @param code The verification code provided by the user.
+     * @return true if verification is successful, false otherwise.
+     */
+    public boolean verifyUser(AppUser user, String code) {
+        if (user.getVerificationCode().equals(code)) {
+            user.setIsVerified(true);
+
+            user.setVerificationCode(null);
+
+            appUserRepository.save(user);
+
+            return true;
+        }
+
+        return false;
+    }
 }
