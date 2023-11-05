@@ -17,7 +17,21 @@ public class Question {
     @EqualsAndHashCode.Include
     private int id;
     private String questionText;
-    private boolean response;
+    private int responseRedButton1;
+    private int responseGreenButton2;
     private String username;
     private String pollTitle;
+    //private DateTimeFormat starttime;
+    //private DateTimeFormat endtime;
+    private boolean isActive;
+
+    public void setResponseRedButton1() {
+        this.responseRedButton1++;
+    }
+
+    public void setResponseGreenButton2(){
+        this.responseGreenButton2++;
+    }
+
+
 }
