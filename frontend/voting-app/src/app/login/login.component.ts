@@ -8,18 +8,16 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  loginForm: FormGroup; // Legg til denne linjen
+  loginForm: FormGroup;
   error: string = '';
 
   constructor(private authService: AuthService, private formBuilder: FormBuilder) {
-    // Initialiser formgruppen med formbuilder
     this.loginForm = this.formBuilder.group({
-      username: ['', Validators.required], // Legg til valideringer her om nødvendig
-      password: ['', Validators.required] // Legg til valideringer her om nødvendig
+      username: ['', Validators.required],
+      password: ['', Validators.required]
     });
   }
 
-  // onSubmit-metode for å håndtere formdata
   onSubmit(): void {
     if (this.loginForm.valid) {
       const username = this.loginForm.get('username')?.value;
@@ -27,9 +25,9 @@ export class LoginComponent {
 
       this.authService.loginUser(username, password).subscribe({
         next: (token: string) => {
-          // Lagre token mottatt fra server
+
           localStorage.setItem('token', token);
-          // Redirect brukeren eller gjør noe annet her
+          //TODO-add the method to redirect the user to the main page
         },
         error: (err: any) => {
           this.error = err.error.message;

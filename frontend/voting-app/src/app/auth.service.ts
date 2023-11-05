@@ -38,7 +38,6 @@ export class AuthService {
   }
 
   searchUsers(username: string): Observable<any> {
-    // !! This is not implemented
     return this.http.get<any>(`${this.baseUrl}/search-users/${username}`);
   }
 
