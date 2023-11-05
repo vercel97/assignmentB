@@ -18,6 +18,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/appUsers")
+@CrossOrigin(origins = "http://localhost:4200")
 public class AppUserController {
 
     @Autowired
@@ -88,15 +89,19 @@ public class AppUserController {
      * @param user
      * @return
      */
+//    @PostMapping("/login")
+//    public ResponseEntity<String> loginUser(@RequestBody AppUser user) {
+//        UserValidationResult validationResult = userService.validateUser(user.getUsername(), user.getPassword()).orElse(null);
+//        if (validationResult.getUser() != null) {
+//            String token = jwtService.generateToken(user.getUsername());
+//            return ResponseEntity.ok(token);
+//        } else {
+//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
+//        }
+//    }
     @PostMapping("/login")
-    public ResponseEntity<String> loginUser(@RequestBody AppUser user) {
-        UserValidationResult validationResult = userService.validateUser(user.getUsername(), user.getPassword()).orElse(null);
-        if (validationResult.getUser() != null) {
-            String token = jwtService.generateToken(user.getUsername());
-            return ResponseEntity.ok(token);
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
-        }
+    public AppUser loginUser(@RequestBody AppUser user) {
+        return userService.findByUsername(user.getUsername()).orElse(null);
     }
 
     /**
