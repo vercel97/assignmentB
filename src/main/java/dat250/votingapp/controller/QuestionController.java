@@ -20,7 +20,6 @@ public class QuestionController {
     @Autowired
     private QuestionRepository questionRepository;
 
-
     @GetMapping("/{id}")
     public ResponseEntity<Question> getQuestionById(@PathVariable int id) {
         Optional<Question> question = questionRepository.findById(id);
@@ -33,15 +32,12 @@ public class QuestionController {
     }
 
     @PostMapping()
-    public ResponseEntity<Void> createQuestion(@RequestParam Question question) {
-        if (question == null ) {
+    public ResponseEntity<Question> createQuestion(@RequestBody Question question) {
+        if (question == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-
-        Question newQuestion = new Question();
-        questionRepository.save(newQuestion);
-
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        Question newQuestion = questionRepository.save(question);
+        return new ResponseEntity<>(newQuestion, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
@@ -86,24 +82,5 @@ public class QuestionController {
         } else {
             return ResponseEntity.notFound().build();
         }
-    }
-
-    @Deprecated
-    @PostMapping("/editQuestion")
-    public ResponseEntity<Void> editQuestion(@RequestParam Question question) {
-        if (question == null ) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
-        questionRepository.save(question);
-
-        return new ResponseEntity<>(HttpStatus.CREATED);
-    }
-
-    @Deprecated
-    @PostMapping("/deleteQuestion")
-    public ResponseEntity<Void> deletePoll(@RequestParam String pollTitle) {
-        //TODO: call to delete poll
-        throw new UnsupportedOperationException("deletePoll Not implemented");
     }
 }

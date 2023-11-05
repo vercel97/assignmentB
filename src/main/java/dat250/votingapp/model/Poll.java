@@ -6,7 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Entity
 @Getter
@@ -21,6 +23,11 @@ public class Poll {
 
     private boolean isPrivate;
 
+    /*
+     * Indicates whether the poll is open
+     */
+    private boolean status;
+
     private int duration;
 
     @OneToOne(mappedBy = "pairedPoll")
@@ -28,6 +35,9 @@ public class Poll {
     private IoTDevice pairedIoT;
 
     private String pollTitle;
+
+    private int yesVoteCount;
+    private int noVoteCount;
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<Voter> authorizedUsers;
@@ -65,5 +75,23 @@ public class Poll {
      */
     public void removeAuthorizedUser(Voter voter){
         authorizedUsers.remove(voter);
+    }
+
+    /**
+     * Set status of a current poll
+     * @param isOpen
+     */
+    public void setStatus(boolean isOpen){ this.status = isOpen; };
+
+    /**
+     * Get status of a current poll
+     */
+    public boolean getStatus() { return this.status; }
+
+    public Map<String, Integer> getResults() {
+        Map<String, Integer> results = new HashMap<>();
+        results.put("yes", yesVoteCount);
+        results.put("no", noVoteCount);
+        return results;
     }
 }
