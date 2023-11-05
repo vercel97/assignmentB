@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/appUsers")
 public class AppUserController {
@@ -42,6 +43,17 @@ public class AppUserController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @GetMapping("/search-users/{username}")
+    public ResponseEntity<AppUser> searchByUsername(@PathVariable String username) {
+        Optional<AppUser> user = userService.findByUsername(username);
+        if (user.isPresent()) {
+            return ResponseEntity.ok(user.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 
     @PostMapping
     public AppUser createAppUser(@RequestBody AppUser appUser) {
@@ -159,3 +171,4 @@ public class AppUserController {
 
 
 }
+

@@ -16,6 +16,9 @@ import { MainPageComponent } from './main-page/main-page.component';
 import { CreatePollComponent } from './create-poll/create-poll.component';
 import { FindPollComponent } from './find-poll/find-poll.component';
 import { VoteComponent } from './vote/vote.component';
+//import { AuthInterceptor } from './iterceptors/auth.interceptor';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+
 
 @NgModule({
   declarations: [
@@ -36,6 +39,7 @@ import { VoteComponent } from './vote/vote.component';
     FormsModule
   ],
   providers: [PollService],
+  //{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,8 +1,9 @@
+// auth.service.ts
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { tap } from 'rxjs/operators';
-import { Observable } from 'rxjs';
-import { AppUser } from './models/poll.model';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+
 
 
 
@@ -10,39 +11,45 @@ import { AppUser } from './models/poll.model';
   providedIn: 'root'
 })
 export class AuthService {
+  private baseUrl = 'http://localhost:8080/api/appUsers';
 
-  private apiUrl = 'http://localhost:8080/api/appUsers';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
-  login(user: { username: string, password: string }) {
-    return this.http.post<AppUser>(`${this.apiUrl}/login`, user).pipe(
-      tap(response => {
-        localStorage.setItem('currentUser', JSON.stringify(response));
-      })
+  loginUser(username: string, password: string): Observable<any> {
+    return this.http.post(`${this.baseUrl}/login`, { username, password }).pipe(
+      catchError(this.handleError)
     );
   }
 
-  getCurrentUser(): AppUser | null {
-    const userJson = localStorage.getItem('currentUser');
-    return userJson ? JSON.parse(userJson) : null;
+  private handleError(error: HttpErrorResponse) {
+    let errorMsg = '';
+    if (error.error instanceof ErrorEvent) {
+      // A client-side or network error occurred. Handle it accordingly.
+      errorMsg = `An error occurred: ${error.error.message}`;
+    } else {
+      // The backend returned an unsuccessful response code.
+      // The response body may contain clues as to what went wrong.
+      errorMsg = `Server returned code: ${error.status}, error message is: ${error.message}`;
+    }
+    console.error(errorMsg);
+    // You can also log to server here if required
+    return throwError(() => new Error(errorMsg));
   }
 
-
-
-  logout() {
-    localStorage.removeItem('authToken');
+  searchUsers(username: string): Observable<any> {
+    // !! This is not implemented
+    return this.http.get<any>(`${this.baseUrl}/search-users/${username}`);
   }
 
-  register(user: {username: string, email: string, password: string}) {
-    return this.http.post(`${this.apiUrl}/register`, user);
+  getCurrentUser(): Observable<any> {
+    // !! this is not implememnted
+    return this.http.get<any>(`${this.baseUrl}/current-user`);
   }
 
-  //used in the create poll component
-  searchUsers(username: string): Observable<AppUser[]> {
-    return this.http.get<AppUser[]>(`${this.apiUrl}/search`, { params: { username } });
+  registerUser(userData: { username: string, email: string, password: string }): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/register`, userData);
   }
+
 
 }
-
-

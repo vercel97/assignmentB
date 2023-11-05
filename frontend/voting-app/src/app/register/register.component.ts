@@ -1,49 +1,29 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
-import {Router} from '@angular/router'
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-register', // Updated selector
-  templateUrl: './register.component.html', // Updated templateUrl
-  styleUrls: ['./register.component.css'] // Update this if you have a corresponding CSS file for registration
+  selector: 'app-register',
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.css']
 })
-
 export class RegistrationComponent {
-
   registerForm: FormGroup;
 
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.registerForm = this.fb.group({
       username: ['', Validators.required],
-      password: ['', Validators.required],
-      email: ['', Validators.required]
-
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(8)]]
     });
-  }
-
-  onSubmit() {
-    if (this.registerForm.valid) {
-      const { username, password } = this.registerForm.value;
-      this.authService.login({username, password})
-      .subscribe(
-        (response: any) => {
-          // handle successful login
-          // for example, store the token in local storage
-        },
-        (error: any) => {
-          // handle login error
-        }
-      );
-    }
   }
 
   onRegister() {
     if (this.registerForm.valid) {
-      const { username, email, password } = this.registerForm.value;
-      this.authService.register({username, email, password}).subscribe(
+      this.authService.registerUser(this.registerForm.value).subscribe(
         response => {
-          alert('Registration successful!');
+          alert('Registration successful! Please check your email to verify your account.'); // Assuming email verification is needed
           this.router.navigate(['/login']);
         },
         error => {
@@ -55,4 +35,3 @@ export class RegistrationComponent {
     }
   }
 }
-

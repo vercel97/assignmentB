@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
-import { Router } from '@angular/router';
-
 
 @Component({
   selector: 'app-login',
@@ -10,47 +8,33 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
+  loginForm: FormGroup; // Legg til denne linjen
+  error: string = '';
 
-  loginForm: FormGroup;
-
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
-    this.loginForm = this.fb.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required]
+  constructor(private authService: AuthService, private formBuilder: FormBuilder) {
+    // Initialiser formgruppen med formbuilder
+    this.loginForm = this.formBuilder.group({
+      username: ['', Validators.required], // Legg til valideringer her om nødvendig
+      password: ['', Validators.required] // Legg til valideringer her om nødvendig
     });
   }
 
-  onSubmit() {
+  // onSubmit-metode for å håndtere formdata
+  onSubmit(): void {
     if (this.loginForm.valid) {
-      this.authService.login(this.loginForm.value)
-      .subscribe(
-        (response: any) => {
-          if (response.id) {
-              this.router.navigate(['/main-page']);
-          } else {
-            alert('Wrong username or password');
-          }
+      const username = this.loginForm.get('username')?.value;
+      const password = this.loginForm.get('password')?.value;
+
+      this.authService.loginUser(username, password).subscribe({
+        next: (token: string) => {
+          // Lagre token mottatt fra server
+          localStorage.setItem('token', token);
+          // Redirect brukeren eller gjør noe annet her
         },
-        (error: any) => {
-          if (error.status === 401) {
-            alert('Wrong username or password');
-          } else {
-            alert('Login error');
-          }
+        error: (err: any) => {
+          this.error = err.error.message;
         }
-      );
+      });
     }
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
