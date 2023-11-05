@@ -36,4 +36,7 @@ public class Poll {
     @OneToMany(cascade = CascadeType.ALL)
     private List<Question> questionList;
 
+    @ManyToOne
+    @JoinColumn(name = "owner_id")
+    private AppUser owner;
 }

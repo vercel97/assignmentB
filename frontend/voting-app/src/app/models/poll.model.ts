@@ -8,6 +8,7 @@ export class Poll {
     pollTitle: string = '';
     authorizedUsers: AppUser[] = [];
     questionList: Question[] = [];
+    owner?: AppUser;
 }
 
 export class Question {

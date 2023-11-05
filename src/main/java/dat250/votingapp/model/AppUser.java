@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -26,7 +27,7 @@ public class AppUser {
     private String password;
 
     @OneToMany
-    private List<Poll> polls;
+    private List<Poll> polls = new ArrayList<>();
 
     // Constructors
 

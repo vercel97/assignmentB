@@ -1,11 +1,16 @@
 package dat250.votingapp.controller;
 
+import dat250.votingapp.model.AppUser;
 import dat250.votingapp.model.Poll;
+import dat250.votingapp.repository.AppUserRepository;
 import dat250.votingapp.repository.PollRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,8 +20,13 @@ import java.util.Optional;
 @RequestMapping("/api/polls")
 public class PollController {
 
+    private static final Logger log = LoggerFactory.getLogger(PollController.class);
+
     @Autowired
     private PollRepository pollRepository;
+
+    @Autowired
+    private AppUserRepository appUserRepository;
 
     @GetMapping
     public List<Poll> getAllPolls() {
@@ -39,9 +49,25 @@ public class PollController {
     }
 
     @PostMapping
-    public Poll createPoll(@RequestBody Poll poll) {
-        return pollRepository.save(poll);
+    public ResponseEntity<?> createPoll(@RequestBody Poll poll, @RequestParam int userId) {
+        log.info("creating poll with title: {} for user id: {}", poll.getPollTitle(), userId);
+        Optional<AppUser> userOptional = appUserRepository.findById(userId);
+        if (!userOptional.isPresent()) {
+            log.error("User not found with id: {}", userId);
+            return ResponseEntity.badRequest().body("User not found");
+        }
+
+        AppUser user = userOptional.get();
+        poll.setOwner(user);
+
+        poll.setAuthorizedUsers(Arrays.asList(user));
+
+        Poll savedPoll = pollRepository.save(poll);
+
+        return ResponseEntity.ok(savedPoll);
     }
+
+
 
     @PutMapping("/{id}")
     public ResponseEntity<Poll> updatePoll(@PathVariable int id, @RequestBody Poll updatedPoll) {

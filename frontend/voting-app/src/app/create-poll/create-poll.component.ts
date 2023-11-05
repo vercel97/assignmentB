@@ -53,19 +53,21 @@ export class CreatePollComponent implements OnInit {
 
 
   createPoll() {
-    this.pollService.createPoll(this.poll).subscribe(
-      (response: Poll) => {
-
-        this.createdPollId = typeof response.id !== 'undefined' ? response.id : null;
-        console.log("Poll created successfully!", response);
-        // TODO: routing
-      },
-      (error) => {
-        console.error("Error creating poll:", error);
-
-      }
-    );
+    const currentUser = this.authService.getCurrentUser();
+    if (currentUser && currentUser.id) {
+      this.pollService.createPoll(this.poll, currentUser.id).subscribe(
+        (response: Poll) => {
+          // ...
+        },
+        (error) => {
+          console.error("Error creating poll:", error);
+        }
+      );
+    } else {
+      console.error('No user is logged in.');
+    }
   }
+
 
 
 

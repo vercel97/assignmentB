@@ -15,11 +15,19 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
-  login(user: {username: string, password: string}) {
-    return this.http.post(`${this.apiUrl}/login`, user).pipe(
-      tap(response => console.log('Server response:', response))
+  login(user: { username: string, password: string }) {
+    return this.http.post<AppUser>(`${this.apiUrl}/login`, user).pipe(
+      tap(response => {
+        localStorage.setItem('currentUser', JSON.stringify(response));
+      })
     );
   }
+
+  getCurrentUser(): AppUser | null {
+    const userJson = localStorage.getItem('currentUser');
+    return userJson ? JSON.parse(userJson) : null;
+  }
+
 
 
   logout() {

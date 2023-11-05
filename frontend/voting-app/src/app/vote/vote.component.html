@@ -1,7 +1,15 @@
-<!-- voting.component.html -->
 <h3>{{ poll.pollTitle }}</h3>
-<div *ngFor="let question of poll.questionList">
-  <p>{{ question.questionText }}</p>
-  <button (click)="voteOnQuestion(question, true)">Yes</button>
-  <button (click)="voteOnQuestion(question, false)">No</button>
-</div>
+<form (ngSubmit)="submitVotes()">
+  <div *ngFor="let question of poll.questionList; let i = index" class="question-block">
+    <p>{{ question.questionText }}</p>
+    <div class="response-buttons">
+      <button type="button" class="btn-red" (click)="voteOnQuestion(question, true)">
+        <i class="fa fa-times-circle"></i> Red
+      </button>
+      <button type="button" class="btn-green" (click)="voteOnQuestion(question, false)">
+        <i class="fa fa-check-circle"></i> Green
+      </button>
+    </div>
+  </div>
+  <button type="submit" class="btn-submit">Submit Votes</button>
+</form>

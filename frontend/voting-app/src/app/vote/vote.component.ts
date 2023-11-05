@@ -50,5 +50,10 @@ export class VoteComponent implements OnInit {
       }
     );
   }
+
+  submitVotes() {
+    this.updatePoll();
+  }
+
 }
 
