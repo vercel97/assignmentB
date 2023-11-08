@@ -22,18 +22,15 @@ export class AuthService {
     );
   }
 
+  //trying to understand the error that occurs when logging in a user
   private handleError(error: HttpErrorResponse) {
     let errorMsg = '';
     if (error.error instanceof ErrorEvent) {
-      // A client-side or network error occurred. Handle it accordingly.
       errorMsg = `An error occurred: ${error.error.message}`;
     } else {
-      // The backend returned an unsuccessful response code.
-      // The response body may contain clues as to what went wrong.
       errorMsg = `Server returned code: ${error.status}, error message is: ${error.message}`;
     }
     console.error(errorMsg);
-    // You can also log to server here if required
     return throwError(() => new Error(errorMsg));
   }
 
@@ -42,7 +39,7 @@ export class AuthService {
   }
 
   getCurrentUser(): Observable<any> {
-    // !! this is not implememnted
+    // this is not implememnted
     return this.http.get<any>(`${this.baseUrl}/current-user`);
   }
 
