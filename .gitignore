@@ -70,3 +70,6 @@ Thumbs.db
 *.swp
 *~
 *.nib
+
+# Database logs
+DB.mv.db.trace.db

@@ -4,9 +4,9 @@ import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormBuilder, FormGroup, Validators, FormsModule } from '@angular/forms';
 
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS  } from '@angular/common/http';
 import { PollService } from './poll.service';
-
+import { AuthInterceptor } from './auth.interceptor';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -16,6 +16,7 @@ import { MainPageComponent } from './main-page/main-page.component';
 import { CreatePollComponent } from './create-poll/create-poll.component';
 import { FindPollComponent } from './find-poll/find-poll.component';
 import { VoteComponent } from './vote/vote.component';
+import { CurrentUserComponent } from './current-user/current-user.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { VoteComponent } from './vote/vote.component';
     MainPageComponent,
     CreatePollComponent,
     FindPollComponent,
-    VoteComponent
+    VoteComponent,
+    CurrentUserComponent
   ],
   imports: [
     BrowserModule,
@@ -35,7 +37,14 @@ import { VoteComponent } from './vote/vote.component';
     RouterModule,
     FormsModule
   ],
-  providers: [PollService],
+  providers: [
+    PollService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
