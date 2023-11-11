@@ -1,5 +1,3 @@
-
-import { FormBuilder, FormGroup, FormArray, FormControl, AbstractControl} from '@angular/forms';
 import { PollService } from '../poll.service';
 import { Component, OnInit } from '@angular/core';
 import { Poll, Question } from '../models/poll.model';
@@ -9,6 +7,7 @@ import { Poll, Question } from '../models/poll.model';
   templateUrl: './create-poll.component.html',
   styleUrls: ['./create-poll.component.css']
 })
+
 export class CreatePollComponent implements OnInit {
   poll: Poll = {
     isPrivate: false,

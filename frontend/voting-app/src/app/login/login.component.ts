@@ -23,22 +23,23 @@ export class LoginComponent {
   onSubmit() {
     if (this.loginForm.valid) {
       this.authService.login(this.loginForm.value)
-      .subscribe(
-        (response: any) => {
-          if (response.id) {
+        .subscribe(
+          (token: string) => {
+            if (token) {
+              localStorage.setItem('authToken', token);
               this.router.navigate(['/main-page']);
-          } else {
-            alert('Feil brukernavn eller passord.');
+            } else {
+              alert('Incorrect username or password.');
+            }
+          },
+          (error: any) => {
+            if (error.status === 401) {
+              alert('Incorrect username or password.');
+            } else {
+              alert('An error occurred during login.');
+            }
           }
-        },
-        (error: any) => {
-          if (error.status === 401) {
-            alert('Feil brukernavn eller passord.');
-          } else {
-            alert('En feil oppstod under innlogging.');
-          }
-        }
-      );
+        );
     }
   }
 }

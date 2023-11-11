@@ -86,24 +86,23 @@ public class AppUserController {
     /**
      * Checks the username and password (login)
      *
-     * @param user
-     * @return
      */
-//    @PostMapping("/login")
-//    public ResponseEntity<String> loginUser(@RequestBody AppUser user) {
-//        UserValidationResult validationResult = userService.validateUser(user.getUsername(), user.getPassword()).orElse(null);
-//        if (validationResult.getUser() != null) {
-//            String token = jwtService.generateToken(user.getUsername());
-//            return ResponseEntity.ok(token);
-//        } else {
-//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
-//        }
-//    }
     @PostMapping("/login")
-    public AppUser loginUser(@RequestBody AppUser user) {
-        return userService.findByUsername(user.getUsername()).orElse(null);
-    }
+    public ResponseEntity<String> loginUser(@RequestBody AppUser user) {
+        Optional<AppUser> authenticatedUser = userService.findByUsername(user.getUsername());
+        if (authenticatedUser.isPresent()) {
+            AppUser existingUser = authenticatedUser.get();
 
+            if (user.getPassword().equals(existingUser.getPassword())) {
+                String token = jwtService.generateToken(existingUser.getUsername());
+                return ResponseEntity.ok(token);
+            }
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
+        }
+
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
+    }
     /**
      * Logout user and invalidate token
      * @param requestHeader
