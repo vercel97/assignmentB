@@ -73,3 +73,6 @@ Thumbs.db
 
 # Database logs
 DB.trace.db
+
+# Database file
+DB.mv.db
