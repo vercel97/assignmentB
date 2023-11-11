@@ -72,4 +72,4 @@ Thumbs.db
 *.nib
 
 # Database logs
-DB.mv.db.trace.db
+DB.trace.db
