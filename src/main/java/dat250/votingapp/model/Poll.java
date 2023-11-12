@@ -94,4 +94,15 @@ public class Poll {
         results.put("no", noVoteCount);
         return results;
     }
+
+    public void pairDevice(){
+
+        this.pairedIoT = dat250.votingapp.model.IoTDevice.getInstance();
+        this.pairedIoT.setPairedPoll(this);
+    }
+
+    public void forgetDevice(){
+
+        this.pairedIoT.setPairedPoll(new Poll());
+    }
 }
