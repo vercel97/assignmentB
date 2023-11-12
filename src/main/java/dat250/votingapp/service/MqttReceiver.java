@@ -8,7 +8,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
-public class git MqttReceiver {
+public class MqttReceiver {
 
     public static void main(String[] args) {
         String brokerUrl = "tcp://172.20.10.2:1883";
