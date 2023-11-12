@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
-import { Poll } from '../models/poll.model';
-import { PollService } from '../poll.service';
-import { Router } from '@angular/router';
+import {Component} from '@angular/core';
+import {Poll} from '../models/poll.model';
+import {PollService} from '../poll.service';
+import {Router} from '@angular/router';
 
 
 @Component({

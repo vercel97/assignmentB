@@ -1,8 +1,8 @@
 // vote.component.ts
-import { Component, Input, OnInit } from '@angular/core';
-import { Poll, Question } from '../models/poll.model';
-import { VotingService } from '../voting.service';
-import { ActivatedRoute } from '@angular/router';
+import {Component, Input, OnInit} from '@angular/core';
+import {Poll, Question} from '../models/poll.model';
+import {VotingService} from '../voting.service';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-vote',

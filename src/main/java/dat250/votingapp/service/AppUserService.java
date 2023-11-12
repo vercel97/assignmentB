@@ -4,6 +4,7 @@ import dat250.votingapp.model.AppUser;
 import dat250.votingapp.repository.AppUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.Optional;
 
 @Service

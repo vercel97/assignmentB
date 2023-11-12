@@ -1,13 +1,13 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './login/login.component';
-import { RegistrationComponent } from './register/register.component';
-import { MainPageComponent } from './main-page/main-page.component';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {LoginComponent} from './login/login.component';
+import {RegistrationComponent} from './register/register.component';
+import {MainPageComponent} from './main-page/main-page.component';
 
-import { CreatePollComponent } from './create-poll/create-poll.component';
+import {CreatePollComponent} from './create-poll/create-poll.component';
 
-import { FindPollComponent } from './find-poll/find-poll.component';
-import { VoteComponent} from './vote/vote.component';
+import {FindPollComponent} from './find-poll/find-poll.component';
+import {VoteComponent} from './vote/vote.component';
 
 const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },

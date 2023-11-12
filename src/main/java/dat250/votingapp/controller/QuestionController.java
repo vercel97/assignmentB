@@ -1,8 +1,6 @@
 package dat250.votingapp.controller;
 
-import dat250.votingapp.model.Poll;
 import dat250.votingapp.model.Question;
-import dat250.votingapp.repository.PollRepository;
 import dat250.votingapp.repository.QuestionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

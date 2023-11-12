@@ -21,7 +21,8 @@ public class Poll {
     @EqualsAndHashCode.Include
     private int id;
 
-    private boolean isPrivate;
+    @Column(name = "isPrivate", nullable = false)
+    private boolean isPrivate = false;
 
     /*
      * Indicates whether the poll is open
@@ -93,5 +94,16 @@ public class Poll {
         results.put("yes", yesVoteCount);
         results.put("no", noVoteCount);
         return results;
+    }
+
+    public void pairDevice(){
+
+        this.pairedIoT = dat250.votingapp.model.IoTDevice.getInstance();
+        this.pairedIoT.setPairedPoll(this);
+    }
+
+    public void forgetDevice(){
+
+        this.pairedIoT.setPairedPoll(new Poll());
     }
 }

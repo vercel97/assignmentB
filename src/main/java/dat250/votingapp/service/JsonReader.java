@@ -1,9 +1,10 @@
 package dat250.votingapp.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.type.TypeReference;
-
-import dat250.votingapp.model.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import dat250.votingapp.model.AppUser;
+import dat250.votingapp.model.Poll;
+import dat250.votingapp.model.Question;
 
 import java.io.File;
 import java.io.IOException;

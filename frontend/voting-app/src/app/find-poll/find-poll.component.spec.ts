@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { FindPollComponent } from './find-poll.component';
+import {FindPollComponent} from './find-poll.component';
 
 describe('FindPollComponent', () => {
   let component: FindPollComponent;

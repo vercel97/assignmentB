@@ -2,6 +2,7 @@ package dat250.votingapp.controller;
 
 import dat250.votingapp.model.Poll;
 import dat250.votingapp.repository.PollRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -57,11 +58,26 @@ public class PollController {
      * @param poll
      * @return
      */
+    @Transactional
     @PostMapping
     public Poll createPoll(@RequestBody Poll poll) {
-        return pollRepository.save(poll);
+
+        System.out.println("LOOOOOOOKKKKK HEERERERE");
+        System.out.println(poll.isPrivate());
+        System.out.println(poll.getPollTitle());
+        Poll newPoll = new Poll();
+        newPoll.setDuration(poll.getDuration());
+        newPoll.setPrivate(poll.isPrivate());
+        newPoll.setPollTitle(poll.getPollTitle());
+        return pollRepository.save(newPoll);
     }
 
+    /**
+     * Creates a new poll (Create-Poll)
+     *
+     * @param poll
+     * @return
+     */
     @Deprecated
     @PostMapping("/createPoll")
     public ResponseEntity<Void> createPoll(@RequestParam String title) {
@@ -71,6 +87,7 @@ public class PollController {
 
         Poll newPoll = new Poll();
         newPoll.setPollTitle(title);
+        newPoll.setPrivate(false);
         pollRepository.save(newPoll);
 
         return new ResponseEntity<>(HttpStatus.CREATED);

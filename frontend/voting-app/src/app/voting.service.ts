@@ -1,8 +1,8 @@
 // voting.service.ts
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { Poll, Question } from './models/poll.model';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {Poll} from './models/poll.model';
 
 @Injectable({
   providedIn: 'root'

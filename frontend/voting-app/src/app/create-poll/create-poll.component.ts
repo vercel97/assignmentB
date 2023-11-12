@@ -1,6 +1,6 @@
-import { PollService } from '../poll.service';
-import { Component, OnInit } from '@angular/core';
-import { Poll, Question } from '../models/poll.model';
+import {PollService} from '../poll.service';
+import {Component, OnInit} from '@angular/core';
+import {Poll, Question} from '../models/poll.model';
 
 @Component({
   selector: 'app-create-poll',

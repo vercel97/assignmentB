@@ -1,9 +1,5 @@
 package dat250.votingapp;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
-
 import java.sql.*;
 
 public class CheckPersistedData {

@@ -1,6 +1,8 @@
 package dat250.votingapp;
 
-import dat250.votingapp.model.*;
+import dat250.votingapp.model.AppUser;
+import dat250.votingapp.model.Poll;
+import dat250.votingapp.model.Question;
 import dat250.votingapp.service.JsonReader;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
