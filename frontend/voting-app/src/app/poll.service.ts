@@ -22,9 +22,13 @@ export class PollService {
   }
 
   //create poll and add it to the users polls
-  createPoll(poll: Poll, userId: number): Observable<Poll> {
-    const params = new HttpParams().set('userId', userId.toString());
-    return this.http.post<Poll>(this.apiUrl, poll, { params });
+  // createPoll(poll: Poll, userId: number): Observable<Poll> {
+  //   const params = new HttpParams().set('userId', userId.toString());
+  //   return this.http.post<Poll>(this.apiUrl, poll, { params });
+  // }
+
+  createPoll(poll: Poll): Observable<Poll> {
+    return this.http.post<Poll>(this.apiUrl, poll);
   }
 
 

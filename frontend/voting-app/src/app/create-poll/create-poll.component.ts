@@ -1,6 +1,5 @@
 import { PollService } from '../poll.service';
 import { Component, OnInit } from '@angular/core';
-import { PollService } from '../poll.service';
 import { Poll, Question, AppUser } from '../models/poll.model';
 import { AuthService } from '../auth.service';
 
@@ -38,8 +37,6 @@ export class CreatePollComponent implements OnInit {
       );
   }
 
-
-
   addAuthorizedUser(user: AppUser) {
     this.poll.authorizedUsers.push(user);
   }
@@ -48,39 +45,27 @@ export class CreatePollComponent implements OnInit {
     const newQuestion: Question = {
       questionText: '',
       response: false,
-      username: '',
+      // username: '',
       pollTitle: ''
     };
     this.poll.questionList.push(newQuestion);
   }
 
 
-createPoll() {
-  this.authService.getCurrentUser().subscribe(
-    (currentUser: AppUser) => {
-      if (currentUser && currentUser.id) {
-        this.pollService.createPoll(this.poll, currentUser.id).subscribe(
+
+  createPoll() {
+      this.pollService.createPoll(this.poll).subscribe(
           (response: Poll) => {
-            // Handle the successful creation of the poll
-            this.createdPollId = response.id ?? null; // Fallback to null if response.id is undefined
-            // ...
+              // Gjør noe med responsen, for eksempel vise en melding om at avstemningen ble opprettet.
+              console.log("Poll created successfully!", response);
+              // Du kan også tilbakestille skjemaet eller navigere til en annen side.
           },
           (error) => {
-            console.error("Error creating poll:", error);
+              console.error("Error creating poll:", error);
+              // Håndter feilen, for eksempel ved å vise en feilmelding til brukeren.
           }
-        );
-      } else {
-        console.error('No user is logged in.');
-      }
-    },
-    (error) => {
-      console.error('Error fetching current user:', error);
-    }
-  );
-}
-
-
-
+      );
+  }
 
   copyPollIdToClipboard(id: number | null) {
     if (id !== null) {
@@ -92,6 +77,4 @@ createPoll() {
       document.body.removeChild(el);
     }
   }
-
 }
-

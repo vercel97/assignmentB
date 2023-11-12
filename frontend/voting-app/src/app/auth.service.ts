@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { tap } from 'rxjs/operators';
+import {tap} from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -35,5 +36,9 @@ export class AuthService {
 
   getAuthToken() {
     return localStorage.getItem('authToken');
+  }
+
+  searchUsers(username: string): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/search-users/${username}`);
   }
 }
