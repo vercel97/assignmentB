@@ -1,3 +1,4 @@
+import { PollService } from '../poll.service';
 import { Component, OnInit } from '@angular/core';
 import { PollService } from '../poll.service';
 import { Poll, Question, AppUser } from '../models/poll.model';
@@ -8,6 +9,7 @@ import { AuthService } from '../auth.service';
   templateUrl: './create-poll.component.html',
   styleUrls: ['./create-poll.component.css']
 })
+
 export class CreatePollComponent implements OnInit {
   poll: Poll = {
     isPrivate: false,
@@ -46,7 +48,8 @@ export class CreatePollComponent implements OnInit {
     const newQuestion: Question = {
       questionText: '',
       response: false,
-      pollTitle: this.poll.pollTitle, // Assign the pollTitle from the poll
+      username: '',
+      pollTitle: ''
     };
     this.poll.questionList.push(newQuestion);
   }

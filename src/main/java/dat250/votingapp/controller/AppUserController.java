@@ -5,7 +5,6 @@ import dat250.votingapp.model.Poll;
 import dat250.votingapp.repository.AppUserRepository;
 import dat250.votingapp.service.AppUserService;
 import dat250.votingapp.service.JwtService;
-import dat250.votingapp.service.UserValidationResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,9 +14,10 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Optional;
 
-@CrossOrigin(origins = "http://localhost:4200")
+
 @RestController
 @RequestMapping("/api/appUsers")
+@CrossOrigin(origins = "http://localhost:4200")
 public class AppUserController {
 
     @Autowired
@@ -96,20 +96,23 @@ public class AppUserController {
     /**
      * Checks the username and password (login)
      *
-     * @param user
-     * @return
      */
     @PostMapping("/login")
     public ResponseEntity<String> loginUser(@RequestBody AppUser user) {
-        UserValidationResult validationResult = userService.validateUser(user.getUsername(), user.getPassword()).orElse(null);
-        if (validationResult.getUser() != null) {
-            String token = jwtService.generateToken(user.getUsername());
-            return ResponseEntity.ok(token);
+        Optional<AppUser> authenticatedUser = userService.findByUsername(user.getUsername());
+        if (authenticatedUser.isPresent()) {
+            AppUser existingUser = authenticatedUser.get();
+
+            if (user.getPassword().equals(existingUser.getPassword())) {
+                String token = jwtService.generateToken(existingUser.getUsername());
+                return ResponseEntity.ok(token);
+            }
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
         }
-    }
 
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
+    }
     /**
      * Logout user and invalidate token
      * @param requestHeader

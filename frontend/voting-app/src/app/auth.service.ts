@@ -1,51 +1,39 @@
-// auth.service.ts
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
-
-
-
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private baseUrl = 'http://localhost:8080/api/appUsers';
 
+  private apiUrl = 'http://localhost:8080/api/appUsers';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  loginUser(username: string, password: string): Observable<any> {
-    return this.http.post(`${this.baseUrl}/login`, { username, password }).pipe(
-      catchError(this.handleError)
+  login(user: { username: string, password: string }) {
+    return this.http.post<string>(`${this.apiUrl}/login`, user, {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+      responseType: 'text' as 'json'
+    }).pipe(
+      tap(response => {
+        localStorage.setItem('authToken', response);
+        localStorage.setItem('username', user.username);
+        console.log('Server response:', response);
+      })
     );
   }
 
-  //trying to understand the error that occurs when logging in a user
-  private handleError(error: HttpErrorResponse) {
-    let errorMsg = '';
-    if (error.error instanceof ErrorEvent) {
-      errorMsg = `An error occurred: ${error.error.message}`;
-    } else {
-      errorMsg = `Server returned code: ${error.status}, error message is: ${error.message}`;
-    }
-    console.error(errorMsg);
-    return throwError(() => new Error(errorMsg));
+  logout() {
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('username');
   }
 
-  searchUsers(username: string): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/search-users/${username}`);
+  register(user: { username: string, email: string, password: string }) {
+    return this.http.post(`${this.apiUrl}/register`, user);
   }
 
-  getCurrentUser(): Observable<any> {
-    // this is not implememnted
-    return this.http.get<any>(`${this.baseUrl}/current-user`);
+  getAuthToken() {
+    return localStorage.getItem('authToken');
   }
-
-  registerUser(userData: { username: string, email: string, password: string }): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/register`, userData);
-  }
-
-
 }

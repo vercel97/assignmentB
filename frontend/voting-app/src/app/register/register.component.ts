@@ -19,11 +19,29 @@ export class RegistrationComponent {
     });
   }
 
+  onSubmit() {
+    if (this.registerForm.valid) {
+      const { username, password } = this.registerForm.value;
+      this.authService.login({username, password})
+      .subscribe(
+        (response: any) => {
+          // handle successful login
+          // for example, store the token in local storage
+        },
+        (error: any) => {
+          // handle login error
+        }
+      );
+    }
+  }
+
   onRegister() {
     if (this.registerForm.valid) {
-      this.authService.registerUser(this.registerForm.value).subscribe(
+      const { username, email, password } = this.registerForm.value;
+      this.authService.register({username, email, password}).subscribe(
         response => {
-          alert('Registration successful! Please check your email to verify your account.'); // Assuming email verification is needed
+          alert('Registration successful!');
+          this.registerForm.reset();
           this.router.navigate(['/login']);
         },
         error => {
@@ -35,3 +53,4 @@ export class RegistrationComponent {
     }
   }
 }
+
