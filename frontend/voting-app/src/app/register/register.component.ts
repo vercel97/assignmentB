@@ -4,21 +4,18 @@ import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-register', // Updated selector
-  templateUrl: './register.component.html', // Updated templateUrl
-  styleUrls: ['./register.component.css'] // Update this if you have a corresponding CSS file for registration
+  selector: 'app-register',
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.css']
 })
-
 export class RegistrationComponent {
-
   registerForm: FormGroup;
 
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.registerForm = this.fb.group({
       username: ['', Validators.required],
-      password: ['', Validators.required],
-      email: ['', Validators.required]
-
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(8)]]
     });
   }
 

@@ -1,5 +1,8 @@
 <app-current-user></app-current-user>
-<button class="nav-button" (click)="navigateTo('create-poll')">Create new poll</button>
-<button class="nav-button" (click)="navigateTo('find-poll')">Find poll</button>
-<button class="nav-button" (click)="logout()">Logout</button>
-
+<div class="button-container">
+  <button class="nav-button" (click)="navigateTo('create-poll')">Create new poll</button>
+  <button class="nav-button" (click)="navigateTo('find-poll')">Find poll</button>
+  <button class="nav-button" (click)="navigateTo('my-polls')">My polls</button>
+  <button class="nav-button" (click)="navigateTo('user-settings')">User settings</button>
+  <button class="nav-button" (click)="logout()">Logout</button>
+</div>

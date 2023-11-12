@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
-import { Router } from '@angular/router';
-
 
 @Component({
   selector: 'app-login',
@@ -10,36 +8,31 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-
   loginForm: FormGroup;
+  error: string = '';
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
-    this.loginForm = this.fb.group({
+  constructor(private authService: AuthService, private formBuilder: FormBuilder) {
+    this.loginForm = this.formBuilder.group({
       username: ['', Validators.required],
       password: ['', Validators.required]
     });
   }
 
-  onSubmit() {
+  onSubmit(): void {
     if (this.loginForm.valid) {
-      this.authService.login(this.loginForm.value)
-        .subscribe(
-          (token: string) => {
-            if (token) {
-              localStorage.setItem('authToken', token);
-              this.router.navigate(['/main-page']);
-            } else {
-              alert('Incorrect username or password.');
-            }
-          },
-          (error: any) => {
-            if (error.status === 401) {
-              alert('Incorrect username or password.');
-            } else {
-              alert('An error occurred during login.');
-            }
-          }
-        );
+      const username = this.loginForm.get('username')?.value;
+      const password = this.loginForm.get('password')?.value;
+
+      this.authService.loginUser(username, password).subscribe({
+        next: (token: string) => {
+
+          localStorage.setItem('token', token);
+          //TODO-add the method to redirect the user to the main page
+        },
+        error: (err: any) => {
+          this.error = err.error.message;
+        }
+      });
     }
   }
 }

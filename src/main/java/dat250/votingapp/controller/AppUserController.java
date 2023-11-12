@@ -3,10 +3,8 @@ package dat250.votingapp.controller;
 import dat250.votingapp.model.AppUser;
 import dat250.votingapp.model.Poll;
 import dat250.votingapp.repository.AppUserRepository;
-import dat250.votingapp.repository.PollRepository;
 import dat250.votingapp.service.AppUserService;
 import dat250.votingapp.service.JwtService;
-import dat250.votingapp.service.UserValidationResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Optional;
+
 
 @RestController
 @RequestMapping("/api/appUsers")
@@ -44,6 +43,17 @@ public class AppUserController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @GetMapping("/search-users/{username}")
+    public ResponseEntity<AppUser> searchByUsername(@PathVariable String username) {
+        Optional<AppUser> user = userService.findByUsername(username);
+        if (user.isPresent()) {
+            return ResponseEntity.ok(user.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 
     @PostMapping
     public AppUser createAppUser(@RequestBody AppUser appUser) {
@@ -162,4 +172,6 @@ public class AppUserController {
         return new ResponseEntity<>(polls, HttpStatus.OK);
     }
 
+
 }
+

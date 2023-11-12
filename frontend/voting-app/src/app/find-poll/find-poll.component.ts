@@ -42,7 +42,7 @@ export class FindPollComponent {
 
   voteOnPoll(pollId?: number) {
       if (pollId !== undefined) {
-          this.router.navigate(['/vote', pollId]);  // Antatt rute: '/vote/:id'
+          this.router.navigate(['/vote', pollId]);
       } else {
           console.error('Poll ID is undefined.');
       }
