@@ -2,6 +2,7 @@ import { PollService } from '../poll.service';
 import { Component, OnInit } from '@angular/core';
 import { Poll, Question, AppUser } from '../models/poll.model';
 import { AuthService } from '../auth.service';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-create-poll',
@@ -21,7 +22,7 @@ export class CreatePollComponent implements OnInit {
   searchResults: AppUser[] = [];
   createdPollId: number | null = null;
 
-  constructor(private pollService: PollService, private authService: AuthService) {}
+  constructor(private pollService: PollService, private authService: AuthService,  private router: Router) {}
 
   ngOnInit(): void {}
 
@@ -54,17 +55,24 @@ export class CreatePollComponent implements OnInit {
 
 
   createPoll() {
-      this.pollService.createPoll(this.poll).subscribe(
-          (response: Poll) => {
-              // Gjør noe med responsen, for eksempel vise en melding om at avstemningen ble opprettet.
-              console.log("Poll created successfully!", response);
-              // Du kan også tilbakestille skjemaet eller navigere til en annen side.
-          },
-          (error) => {
-              console.error("Error creating poll:", error);
-              // Håndter feilen, for eksempel ved å vise en feilmelding til brukeren.
-          }
-      );
+    this.pollService.createPoll(this.poll).subscribe(
+      (response: Poll) => {
+
+        console.log("Poll created successfully!", response);
+
+        if (response) {
+          this.router.navigate(['/main-page']);
+        } else {
+          alert('Poll not created');
+        }
+
+
+      },
+      (error) => {
+        console.error("Error creating poll:", error);
+        // Håndter feilen, for eksempel ved å vise en feilmelding til brukeren.
+      }
+    );
   }
 
   copyPollIdToClipboard(id: number | null) {
