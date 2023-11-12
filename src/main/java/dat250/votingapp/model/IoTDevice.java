@@ -10,6 +10,9 @@ import lombok.Setter;
 @Setter
 @EqualsAndHashCode(of = "id")
 public class IoTDevice {
+
+    private static IoTDevice instance;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -27,5 +30,12 @@ public class IoTDevice {
     // Constructors, including one that initializes display
     public IoTDevice() {
         this.display = new IoTDisplay();
+    }
+
+    public static IoTDevice getInstance() {
+        if (instance == null) {
+            instance = new IoTDevice();
+        }
+        return instance;
     }
 }
