@@ -18,10 +18,9 @@ public class IOTController {
     @PostMapping("/api/notification/greenVote")
     public ResponseEntity<String> registerGreenVote(@RequestBody String notification) {
 
-
         Question question = pollRepository.getActiveQuestion(device.getPairedPoll());
         question.setResponseGreenButton2();
-        return ResponseEntity.ok("Notification received");
+        return ResponseEntity.ok("Notification green received");
     }
 
     @PostMapping("/api/notification/redVote")
@@ -29,7 +28,7 @@ public class IOTController {
 
         Question question = pollRepository.getActiveQuestion(device.getPairedPoll());
         question.setResponseRedButton1();
-        return ResponseEntity.ok("Notification received");
+        return ResponseEntity.ok("Notification red received");
     }
 }
 

@@ -48,13 +48,13 @@ public class MqttReceiver {
                     String suburl = "";
 
                     if (topic.equals(greenTopic)) {
-                        suburl = "voteGreen";
+                        suburl = "greenVote";
                     } else {
-                        suburl = "voteRed";
+                        suburl = "redVote";
                     }
 
                     HttpRequest request = HttpRequest.newBuilder()
-                            .uri(URI.create("http://localhost:8080/api/" + suburl))
+                            .uri(URI.create("http://localhost:4200/api/notification" + suburl))
                             .POST(HttpRequest.BodyPublishers.ofString(suburl))
                             .header("Content-Type", "application/json")
                             .build();
